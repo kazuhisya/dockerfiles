@@ -1,0 +1,54 @@
+FROM centos:7
+MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
+
+# port
+EXPOSE 3000
+
+# env
+ENV REDMINE_VERSION="3.3.2" \
+    RUBY_VERSION="rh-ruby22" \
+    PASSENGER_VERSION="rh-passenger40" \
+    PASSENGER_RUBY_VERSION="rh-passenger40-ruby22"
+
+# yum
+RUN yum install -y centos-release-scl && \
+    yum-config-manager --enable centos-sclo-rh-testing && \
+        INSTALL_PKGS="${RUBY_VERSION} ${RUBY_VERSION}-ruby-devel ${RUBY_VERSION}-rubygem-bundler \
+        ${PASSENGER_RUBY_VERSION} \
+        nginx16 \
+        openssl-devel readline-devel zlib-devel curl-devel libyaml-devel libffi-devel \
+        ImageMagick ImageMagick-devel ipa-pgothic-fonts \
+        gcc gcc-c++ git make zlib-devel sqlite-devel which" && \
+    yum install -y --setopt=tsflags=nodocs ${INSTALL_PKGS} && \
+    yum clean all
+
+# Redmine Download
+RUN curl -OL http://www.redmine.org/releases/redmine-${REDMINE_VERSION}.tar.gz && \
+    tar xvf redmine-${REDMINE_VERSION}.tar.gz && \
+    mv redmine-${REDMINE_VERSION} /var/lib/redmine
+
+# Redmine Settings
+WORKDIR /var/lib/redmine
+
+RUN cp config/configuration.yml.example config/configuration.yml && \
+    sed -i -e 's/  rmagick_font_path:/  rmagick_font_path: \/usr\/share\/fonts\/ipa-pgothic\/ipagp.ttf/' config/configuration.yml && \
+    echo "production:" > config/database.yml && \
+    echo "  adapter: sqlite3" >> config/database.yml && \
+    echo "  database: db/production.sqlite3" >> config/database.yml && \
+    echo "  pool: 5" >> config/database.yml && \
+    echo "  timeout: 5000" >> config/database.yml
+
+# Redmine Install
+RUN scl enable ${RUBY_VERSION} ${PASSENGER_VERSION} "bundle install --without development test --path vendor/bundle -j4"
+RUN scl enable ${RUBY_VERSION} ${PASSENGER_VERSION} "bundle exec rake generate_secret_token" && \
+    scl enable ${RUBY_VERSION} ${PASSENGER_VERSION} "RAILS_ENV=production bundle exec rake db:migrate" && \
+    scl enable ${RUBY_VERSION} ${PASSENGER_VERSION} "RAILS_ENV=production REDMINE_LANG=ja bundle exec rake redmine:load_default_data"
+
+# Start Command
+# RUN scl enable ${RUBY_VERSION} ${PASSENGER_VERSION} "RAILS_ENV=production bundle exec passenger start"
+RUN echo "#!/bin/sh" > start.sh && \
+    echo "scl enable ${RUBY_VERSION} ${PASSENGER_VERSION} \"RAILS_ENV=production bundle exec passenger start\"" >> start.sh && \
+    chmod +x start.sh
+
+# Command
+CMD ["/var/lib/redmine/start.sh"]
