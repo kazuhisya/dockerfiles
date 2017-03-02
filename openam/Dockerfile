@@ -1,7 +1,5 @@
 FROM tomcat:8-jre8
 
-MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
-
 ENV OPENAM_VERSION="13.0.0" \
     CATALINA_OPTS="-Xmx2048m -server" \
     #WAR_URL="http://maven.forgerock.org/repo/releases/org/forgerock/openam/openam-server/" \
