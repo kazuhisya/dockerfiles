@@ -1,5 +1,5 @@
 %define name albert
-%define version 0.9.0
+%define version 0.9.4
 
 
 %define prefix     /usr
@@ -14,11 +14,12 @@
 Summary:     A DE agnostic omnilauncher.
 Name:        %{name}
 Version:     %{version}
-Release:     3.1
+Release:     1
 License:     GPL
 Group:       User Interface/X
-URL:         https://github.com/ManuelSchneid3r/albert
-Source0:     https://github.com/ManuelSchneid3r/albert/archive/master.zip
+URL:         https://github.com/albertlauncher/albert
+Source0:     https://github.com/albertlauncher/%{name}/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
+
 # Source10:    %name.desktop
 # Source11:    %name.png
 
@@ -35,13 +36,13 @@ BuildRequires: qt5-qtsvg-devel
 
 
 %prep
-%setup -q -n %name-master
+%setup -q
 
 %build
 cd src && cmake ".." \
  -DCMAKE_INSTALL_PREFIX=/usr \
  -DCMAKE_BUILD_TYPE=Release
-make
+make -j
 
 %install
 # rm -rf $RPM_BUILD_ROOT
@@ -63,13 +64,14 @@ rm -rf $RPM_BUILD_ROOT
 # %{datadir}/albert/plugins/*
 %{libdir}/albert/plugins/*
 %{datadir}/albert/themes/*
-%{libdir}/albert/libalbertcore.so
-%{libdir}/albert/libxdg.so
+%{libdir}/albert/*.so
 %{datadir}/icons/hicolor/scalable/apps/albert.svg
 %{datadir}/applications/albert.desktop
 
 
 %changelog
+* Fri Mar 3 2017 Kazuhisa Hara <kazuhisya@gamial.com>
+- build for ver 0.9.4
 
 * Fri Jan 20 2017 Rabin .Y <s+albert@rabin.io>
 - build for ver 0.9.0
@@ -85,4 +87,3 @@ rm -rf $RPM_BUILD_ROOT
 
 * Sun Feb 1 2015 Rabin .Y <s+albert@rabin.io>
 - init build
-
