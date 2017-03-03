@@ -42,7 +42,7 @@ BuildRequires: qt5-qtsvg-devel
 cd src && cmake ".." \
  -DCMAKE_INSTALL_PREFIX=/usr \
  -DCMAKE_BUILD_TYPE=Release
-make -j
+make %{?_smp_mflags}
 
 %install
 # rm -rf $RPM_BUILD_ROOT
