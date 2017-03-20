@@ -1,5 +1,5 @@
 %define name albert
-%define version 0.9.4
+%define version 0.10.0
 
 
 %define prefix     /usr
@@ -61,7 +61,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root)
 %{bindir}/albert
-# %{datadir}/albert/plugins/*
+%{datadir}/albert/plugins/*
 %{libdir}/albert/plugins/*
 %{datadir}/albert/themes/*
 %{libdir}/albert/*.so
@@ -70,6 +70,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Mar 20 2017 Kazuhisa Hara <kazuhisya@gamial.com>
+- build for ver 0.10.0
+
 * Fri Mar 3 2017 Kazuhisa Hara <kazuhisya@gamial.com>
 - build for ver 0.9.4
 
