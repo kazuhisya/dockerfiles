@@ -1,5 +1,5 @@
 %define name albert
-%define version 0.10.0
+%define version 0.10.1
 
 
 %define prefix     /usr
@@ -61,7 +61,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root)
 %{bindir}/albert
-%{datadir}/albert/plugins/*
+#%{datadir}/albert/plugins/*
 %{libdir}/albert/plugins/*
 %{datadir}/albert/themes/*
 %{libdir}/albert/*.so
@@ -70,23 +70,19 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Mon Mar 20 2017 Kazuhisa Hara <kazuhisya@gamial.com>
+* Tue Mar 21 2017 Kazuhisa Hara <kazuhisya@gamial.com> - 0.10.1-1
+- build for ver 0.10.1
+* Mon Mar 20 2017 Kazuhisa Hara <kazuhisya@gamial.com> - 0.10.0-1
 - build for ver 0.10.0
-
-* Fri Mar 3 2017 Kazuhisa Hara <kazuhisya@gamial.com>
+* Fri Mar 3 2017 Kazuhisa Hara <kazuhisya@gamial.com> - 0.9.4-1
 - build for ver 0.9.4
-
-* Fri Jan 20 2017 Rabin .Y <s+albert@rabin.io>
+* Fri Jan 20 2017 Rabin .Y <s+albert@rabin.io> - 0.9.0-1
 - build for ver 0.9.0
-
-* Wed Jun 22 2016 Rabin .Y <s+albert@rabin.io>
+* Wed Jun 22 2016 Rabin .Y <s+albert@rabin.io> - 0.8.9-1
 - build for ver 0.8.9
-
-* Thu Oct 29 2015 Rabin .Y <s+albert@rabin.io>
+* Thu Oct 29 2015 Rabin .Y <s+albert@rabin.io> - 0.8-1
 - build for ver 0.8
-
-* Tue Oct 20 2015 Rabin .Y <s+albert@rabin.io>
+* Tue Oct 20 2015 Rabin .Y <s+albert@rabin.io> - 0.7.7-1
 - build for ver 0.7.7
-
 * Sun Feb 1 2015 Rabin .Y <s+albert@rabin.io>
 - init build

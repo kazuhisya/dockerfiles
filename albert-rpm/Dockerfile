@@ -2,7 +2,7 @@ FROM local/fc25:dev-tools
 MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
 
 ENV TZ="JST-9" \
-    ALBERT="0.10.0"
+    ALBERT="0.10.1"
 
 RUN dnf install -y cmake qt5-qtbase qt5-qttools qt5-qtbase-devel qt5-qtx11extras-devel muParser-devel qt5-qtsvg-devel
 COPY albert.spec ./
