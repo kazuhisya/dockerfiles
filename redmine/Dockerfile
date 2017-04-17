@@ -5,7 +5,7 @@ MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
 EXPOSE 3000
 
 # env
-ENV REDMINE_VERSION="3.3.2" \
+ENV REDMINE_VERSION="3.3.3" \
     RUBY_VERSION="rh-ruby22" \
     PASSENGER_VERSION="rh-passenger40" \
     PASSENGER_RUBY_VERSION="rh-passenger40-ruby22"
