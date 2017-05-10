@@ -1,3 +1,5 @@
+# vi: set ft=dockerfile :
+
 FROM tomcat:8-jre8
 
 ENV OPENAM_VERSION="13.0.0" \

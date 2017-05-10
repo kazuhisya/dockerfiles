@@ -1,3 +1,5 @@
+# vi: set ft=dockerfile :
+
 FROM local/fc25:dev-tools
 MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
 

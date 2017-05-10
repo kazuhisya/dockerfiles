@@ -1,3 +1,5 @@
+# vi: set ft=dockerfile :
+
 FROM fedora:25
 MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
 

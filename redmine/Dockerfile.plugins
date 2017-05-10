@@ -1,3 +1,5 @@
+# vi: set ft=dockerfile :
+
 FROM centos:7
 MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
 
