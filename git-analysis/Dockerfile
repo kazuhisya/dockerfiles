@@ -1,6 +1,7 @@
 # vi: set ft=dockerfile :
 
 FROM centos:7
+ENV TZ="JST-9"
 MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
 
 RUN yum install -y --setopt=tsflags=nodocs epel-release && \

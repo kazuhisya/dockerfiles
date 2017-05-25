@@ -7,7 +7,8 @@ ENV OPENAM_VERSION="13.0.0" \
     #WAR_URL="http://maven.forgerock.org/repo/releases/org/forgerock/openam/openam-server/" \
     #WAR_NAME="openam-server"
     WAR_URL="https://github.com/OpenRock/OpenAM/releases/download/" \
-    WAR_NAME="OpenAM-ServerOnly"
+    WAR_NAME="OpenAM-ServerOnly" \
+    TZ="JST-9"
 
 RUN curl -OL "${WAR_URL}/${OPENAM_VERSION}/${WAR_NAME}-${OPENAM_VERSION}.war" && \
     mv ${WAR_NAME}-${OPENAM_VERSION}.war ${CATALINA_HOME}/webapps/openam.war

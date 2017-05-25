@@ -10,7 +10,8 @@ EXPOSE 3000
 ENV REDMINE_VERSION="3.3.3" \
     RUBY_VERSION="rh-ruby22" \
     PASSENGER_VERSION="rh-passenger40" \
-    PASSENGER_RUBY_VERSION="rh-passenger40-ruby22"
+    PASSENGER_RUBY_VERSION="rh-passenger40-ruby22" \
+    TZ="JST-9"
 
 # yum
 RUN yum install -y centos-release-scl && \
