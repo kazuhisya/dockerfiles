@@ -1,5 +1,5 @@
 %define name albert
-%define version 0.11.2
+%define version 0.11.3
 
 
 %define prefix     /usr
