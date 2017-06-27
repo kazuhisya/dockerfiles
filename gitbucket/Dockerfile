@@ -3,7 +3,7 @@
 FROM centos:7
 MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
 
-ENV GITBUCKET_VERSION="4.10" \
+ENV GITBUCKET_VERSION="4.13" \
     PORT="8080" \
     TZ="JST-9"
 EXPOSE 8080
