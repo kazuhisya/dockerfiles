@@ -13,7 +13,7 @@
 Summary:     A DE agnostic omnilauncher.
 Name:        %{name}
 Version:     %{version}
-Release:     1
+Release:     1%{?dist}
 License:     GPL
 Group:       User Interface/X
 URL:         https://github.com/albertlauncher/albert
