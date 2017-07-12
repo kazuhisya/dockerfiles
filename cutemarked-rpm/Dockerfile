@@ -1,6 +1,6 @@
 # vi: set ft=dockerfile :
 
-FROM local/fc25:dev-tools
+FROM local/fc26:dev-tools
 MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
 
 ENV TZ="JST-9" \

@@ -1,6 +1,6 @@
 # vi: set ft=dockerfile :
 
-FROM docker.io/fedora:25
+FROM docker.io/fedora:26
 MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
 
 ENV TZ="JST-9"
