@@ -4,10 +4,16 @@ FROM local/fc26:dev-tools
 MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
 
 ENV TZ="JST-9" \
-    ORIG_SRPM="cutemarked-0.11.3-1.1.src.rpm"
+    CVERSION="0.11.3"
 
-WORKDIR /work
-RUN curl -OL "http://download.opensuse.org/repositories/home:/cloose1974/Fedora_23/src/${ORIG_SRPM}"
-
-RUN dnf builddep -y ./${ORIG_SRPM} --nogpgcheck --setopt=tsflags=nodocs && \
-    rpmbuild --rebuild ./${ORIG_SRPM}
+WORKDIR /root/rpmbuild
+RUN rpmdev-setuptree
+COPY cutemarked.spec /root/rpmbuild/SPECS/cutemarked.spec
+RUN dnf builddep --nogpgcheck --setopt=tsflags=nodocs -y ./SPECS/cutemarked.spec
+RUN curl -OL https://github.com/cloose/CuteMarkEd/archive/v${CVERSION}.tar.gz && \
+    tar xf v${CVERSION}.tar.gz && \
+    mv CuteMarkEd-${CVERSION} cutemarked-${CVERSION} && \
+    tar -zcf cutemarked-${CVERSION}.tar.gz cutemarked-${CVERSION} && \
+    rm -rf cutemarked-${CVERSION} && \
+    mv cutemarked-${CVERSION}.tar.gz ./SOURCES/
+RUN rm -rf ~/.rpmmacros && rpmbuild -ba ./SPECS/cutemarked.spec
