@@ -59,7 +59,7 @@ WORKDIR /var/lib/redmine
 ADD src/start.sh /var/lib/redmine/start.sh
 
 # Volume
-VOLUME ["/var/lib/redmine/config", "/var/lib/redmine/db", "/var/lib/redmine/files" ,"/var/lib/redmine/plugins"]
+VOLUME ["/var/lib/redmine/db", "/var/lib/redmine/files"]
 
 # Command
 CMD ["/var/lib/redmine/start.sh"]
