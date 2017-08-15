@@ -3,19 +3,21 @@
 FROM docker.io/fedora:26
 MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
 
-ENV TZ="JST-9"
+ENV TZ="JST-9" \
+    BOOSTNOTE_VERSION="0.8.14"
 
 RUN dnf install -y --setopt=tsflags=nodocs \
-    nodejs nodejs-grunt \
-    dpkg dpkg-dev fakeroot \
     rpm-build git
 
-RUN git clone --depth 1 https://github.com/BoostIO/Boostnote /boostnote
-ADD https://github.com/kazuhisya/Boostnote/commit/b6304a04e68bfbcdf44d2280bb2c6680d8abbca3.diff /boostnote/b6304a04e68bfbcdf44d2280bb2c6680d8abbca3.diff
-RUN useradd -m mock && chown -R mock.mock /boostnote
-USER mock
-WORKDIR /boostnote
+ADD https://github.com/BoostIO/boost-releases/releases/download/v${BOOSTNOTE_VERSION}/boostnote_${BOOSTNOTE_VERSION}_amd64.deb /home/mock/boostnote.deb
+ADD boostnote.spec /home/mock/boostnote.spec
 
-RUN patch -u < b6304a04e68bfbcdf44d2280bb2c6680d8abbca3.diff
-RUN npm install
-RUN grunt build
+RUN useradd -m mock && chown mock.mock -R /home/mock
+USER mock
+WORKDIR /home/mock
+
+RUN ar vx boostnote.deb && \
+    mv data.tar.xz boostnote-${BOOSTNOTE_VERSION}.tar.gz && \
+    mkdir -p rpmbuild/SOURCES && \
+    mv boostnote-${BOOSTNOTE_VERSION}.tar.gz rpmbuild/SOURCES/
+RUN rpmbuild -ba boostnote.spec
