@@ -1,57 +1,67 @@
 # vi: set ft=dockerfile :
 
-FROM centos:7
+FROM alpine:3.5
 MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
 
 # port
 EXPOSE 3000
 
 # env
-ENV REDMINE_VERSION="3.4.0" \
-    RUBY_VERSION="rh-ruby22" \
-    PASSENGER_VERSION="rh-passenger40" \
-    PASSENGER_RUBY_VERSION="rh-passenger40-ruby22" \
+ENV REDMINE_VERSION="3.4.2" \
+    IPAFONT_VERSION="00303" \
     TZ="JST-9"
 
-# yum
-RUN yum install -y centos-release-scl && \
-    yum-config-manager --enable centos-sclo-rh-testing && \
-        INSTALL_PKGS="${RUBY_VERSION} ${RUBY_VERSION}-ruby-devel ${RUBY_VERSION}-rubygem-bundler \
-        ${PASSENGER_RUBY_VERSION} \
-        nginx16 \
-        openssl-devel readline-devel zlib-devel curl-devel libyaml-devel libffi-devel \
-        ImageMagick ImageMagick-devel ipa-pgothic-fonts \
-        gcc gcc-c++ git make zlib-devel sqlite-devel which" && \
-    yum install -y --setopt=tsflags=nodocs ${INSTALL_PKGS} && \
-    yum clean all
+# apk
+RUN apk update && apk add \
+        automake bash build-base curl \
+        gcc git imagemagick imagemagick-dev \
+        libxml2-dev libxslt-dev linux-headers \
+        make readline-dev \
+        ruby ruby-bigdecimal ruby-bundler ruby-dev ruby-json \
+        sqlite-dev tzdata zlib-dev && \
+        rm -rf /var/cache/apk/*
 
 # Redmine Download
 RUN curl -OL http://www.redmine.org/releases/redmine-${REDMINE_VERSION}.tar.gz && \
     tar xvf redmine-${REDMINE_VERSION}.tar.gz && \
-    mv redmine-${REDMINE_VERSION} /var/lib/redmine
+    mv redmine-${REDMINE_VERSION} /var/lib/redmine && \
+    rm -rf redmine-${REDMINE_VERSION}.tar.gz
+
+# IPA font Download
+RUN curl -OL http://dl.ipafont.ipa.go.jp/IPAfont/ipag${IPAFONT_VERSION}.zip && \
+    unzip ipag${IPAFONT_VERSION}.zip && \
+    mkdir -p /usr/share/fonts/ipa-gothic && \
+    mv ipag${IPAFONT_VERSION}/ipag.ttf /usr/share/fonts/ipa-gothic/ && \
+    rm -rf ipag${IPAFONT_VERSION} ipag${IPAFONT_VERSION}.zip
 
 # Redmine Settings
 WORKDIR /var/lib/redmine
 
 RUN cp config/configuration.yml.example config/configuration.yml && \
-    sed -i -e 's/  rmagick_font_path:/  rmagick_font_path: \/usr\/share\/fonts\/ipa-pgothic\/ipagp.ttf/' config/configuration.yml && \
+    sed -i -e 's/  rmagick_font_path:/  rmagick_font_path: \/usr\/share\/fonts\/ipa-gothic\/ipagp.ttf/' config/configuration.yml && \
     echo "production:" > config/database.yml && \
     echo "  adapter: sqlite3" >> config/database.yml && \
     echo "  database: db/production.sqlite3" >> config/database.yml && \
     echo "  pool: 5" >> config/database.yml && \
-    echo "  timeout: 5000" >> config/database.yml
+    echo "  timeout: 5000" >> config/database.yml && \
+    echo "gem \"unicorn\"" >> Gemfile.local
 
 # Redmine Install
-RUN scl enable ${RUBY_VERSION} ${PASSENGER_VERSION} "bundle install --without development test --path vendor/bundle -j4"
-RUN scl enable ${RUBY_VERSION} ${PASSENGER_VERSION} "bundle exec rake generate_secret_token" && \
-    scl enable ${RUBY_VERSION} ${PASSENGER_VERSION} "RAILS_ENV=production bundle exec rake db:migrate" && \
-    scl enable ${RUBY_VERSION} ${PASSENGER_VERSION} "RAILS_ENV=production REDMINE_LANG=ja bundle exec rake redmine:load_default_data"
+RUN NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) && \
+    bundle install --without development test --path vendor/bundle -j${NPROC}
 
-# Start Command
-# RUN scl enable ${RUBY_VERSION} ${PASSENGER_VERSION} "RAILS_ENV=production bundle exec passenger start"
-RUN echo "#!/bin/sh" > start.sh && \
-    echo "scl enable ${RUBY_VERSION} ${PASSENGER_VERSION} \"RAILS_ENV=production bundle exec passenger start\"" >> start.sh && \
-    chmod +x start.sh
+# Install Plug-in
+WORKDIR /var/lib/redmine/plugins
+RUN git clone --depth=1 https://github.com/ixti/redmine_tags.git && \
+    git clone --depth=1 https://github.com/kazuhisya/redmine_default_due_date && \
+    NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) && \
+    bundle install --without development test --path ../vendor/bundle -j${NPROC}
+WORKDIR /var/lib/redmine
+
+ADD src/start.sh /var/lib/redmine/start.sh
+
+# Volume
+VOLUME ["/var/lib/redmine/config", "/var/lib/redmine/db", "/var/lib/redmine/files" ,"/var/lib/redmine/plugins"]
 
 # Command
 CMD ["/var/lib/redmine/start.sh"]
