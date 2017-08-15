@@ -53,9 +53,7 @@ RUN NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) && \
 # Install Plug-in
 WORKDIR /var/lib/redmine/plugins
 RUN git clone --depth=1 https://github.com/ixti/redmine_tags.git && \
-    git clone --depth=1 https://github.com/kazuhisya/redmine_default_due_date && \
-    NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) && \
-    bundle install --without development test --path ../vendor/bundle -j${NPROC}
+    git clone --depth=1 https://github.com/kazuhisya/redmine_default_due_date
 WORKDIR /var/lib/redmine
 
 ADD src/start.sh /var/lib/redmine/start.sh

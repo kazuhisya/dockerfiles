@@ -3,6 +3,8 @@
 if [ ! -e /var/lib/redmine/db/production.sqlite3 ]; then
     # first
     echo "=== Start first setup ==="
+    NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) && \
+        bundle install --without development test --path vendor/bundle -j${NPROC}
     bundle exec rake generate_secret_token
     RAILS_ENV=production bundle exec rake db:migrate
     RAILS_ENV=production REDMINE_LANG=ja bundle exec rake redmine:load_default_data
