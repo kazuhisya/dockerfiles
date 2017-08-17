@@ -48,7 +48,8 @@ RUN cp config/configuration.yml.example config/configuration.yml && \
 
 # Redmine Install
 RUN NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) && \
-    bundle install --without development test --path vendor/bundle -j${NPROC}
+    bundle install --without development test --path vendor/bundle -j${NPROC} && \
+    rm -rf ~/.bundle/cache/compact_index
 
 # Install Plug-in
 WORKDIR /var/lib/redmine/plugins
