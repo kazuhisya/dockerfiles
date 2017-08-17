@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ ! -e /var/lib/redmine/db/production.sqlite3 ]; then
+if [ ! -e /var/lib/redmine/data/production.sqlite3 ]; then
     # first
     echo "=== Start first setup ==="
     NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) && \

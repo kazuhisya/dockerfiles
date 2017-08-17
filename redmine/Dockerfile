@@ -41,10 +41,11 @@ RUN cp config/configuration.yml.example config/configuration.yml && \
     sed -i -e 's/  rmagick_font_path:/  rmagick_font_path: \/usr\/share\/fonts\/ipa-gothic\/ipagp.ttf/' config/configuration.yml && \
     echo "production:" > config/database.yml && \
     echo "  adapter: sqlite3" >> config/database.yml && \
-    echo "  database: db/production.sqlite3" >> config/database.yml && \
+    echo "  database: data/production.sqlite3" >> config/database.yml && \
     echo "  pool: 5" >> config/database.yml && \
     echo "  timeout: 5000" >> config/database.yml && \
-    echo "gem \"unicorn\"" >> Gemfile.local
+    echo "gem \"unicorn\"" >> Gemfile.local && \
+    mkdir -p data
 
 # Redmine Install
 RUN NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) && \
@@ -60,7 +61,7 @@ WORKDIR /var/lib/redmine
 ADD src/start.sh /var/lib/redmine/start.sh
 
 # Volume
-VOLUME ["/var/lib/redmine/db", "/var/lib/redmine/files"]
+VOLUME ["/var/lib/redmine/data", "/var/lib/redmine/files"]
 
 # Command
 CMD ["/var/lib/redmine/start.sh"]

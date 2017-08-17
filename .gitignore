@@ -3,3 +3,4 @@
 # artifact dir
 dist
 x86_64
+.*
