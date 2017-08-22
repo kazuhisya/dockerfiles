@@ -4,21 +4,20 @@ FROM fedora:26
 MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
 
 RUN cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
-RUN dnf install -y --setopt=tsflags=nodocs dnf-plugins-core && \
-    dnf config-manager --add-repo https://dl.winehq.org/wine-builds/fedora/26/winehq.repo && \
-    dnf install -y --setopt=tsflags=nodocs \
-        winehq-devel sudo bash bash-completion \
+RUN dnf install -y --setopt=tsflags=nodocs \
+        wine winetricks sudo bash bash-completion \
+        glibc-langpack-ja glibc-locale-source \
         vlgothic-fonts vlgothic-p-fonts && \
-    rm -rf /opt/wine-devel/share/wine/fonts/tahoma*
+        rm -rf /var/cache/yum && rm -rf /var/cache/dnf
 
-RUN export uid=1000 gid=1000 && \
+RUN localedef -i ja_JP -f UTF-8 ja_JP.UTF-8 | true && \
+    export uid=1000 gid=1000 && \
     mkdir -p /home/wineuser && \
     echo "wineuser:x:${uid}:${gid}:Developer,,,:/home/wineuser:/bin/bash" >> /etc/passwd && \
     echo "wineuser:x:${uid}:" >> /etc/group && \
     echo "wineuser ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/wineuser && \
     chmod 0440 /etc/sudoers.d/wineuser && \
     cp /etc/skel/.bash* /home/wineuser/
-COPY user.reg /home/wineuser/.wine/user.reg
 RUN chown wineuser.wineuser /home/wineuser -R
 
 USER wineuser
