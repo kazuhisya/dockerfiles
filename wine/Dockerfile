@@ -12,20 +12,20 @@ RUN dnf install -y --setopt=tsflags=nodocs \
 
 RUN localedef -i ja_JP -f UTF-8 ja_JP.UTF-8 | true && \
     export uid=1000 gid=1000 && \
-    mkdir -p /home/wineuser && \
-    echo "wineuser:x:${uid}:${gid}:Developer,,,:/home/wineuser:/bin/bash" >> /etc/passwd && \
-    echo "wineuser:x:${uid}:" >> /etc/group && \
-    echo "wineuser ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/wineuser && \
-    chmod 0440 /etc/sudoers.d/wineuser && \
-    cp /etc/skel/.bash* /home/wineuser/
-RUN chown wineuser.wineuser /home/wineuser -R
+    mkdir -p /home/wine && \
+    echo "wine:x:${uid}:${gid}:Developer,,,:/home/wine:/bin/bash" >> /etc/passwd && \
+    echo "wine:x:${uid}:" >> /etc/group && \
+    echo "wine ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/wine && \
+    chmod 0440 /etc/sudoers.d/wine && \
+    cp /etc/skel/.bash* /home/wine/
+RUN chown wine.wine /home/wine -R
 
-USER wineuser
-ENV HOME="/home/wineuser" \
+USER wine
+ENV HOME="/home/wine" \
     LANG="ja_JP.UTF-8"
-WORKDIR /home/wineuser
-RUN mkdir -p /home/wineuser/.wine/drive_c/windows/Fonts && \
-    cp /usr/share/fonts/vlgothic/*.ttf /home/wineuser/.wine/drive_c/windows/Fonts/ && \
-    chown wineuser.wineuser /home/wineuser/.wine -R
+WORKDIR /home/wine
+RUN mkdir -p /home/wine/.wine/drive_c/windows/Fonts && \
+    cp /usr/share/fonts/vlgothic/*.ttf /home/wine/.wine/drive_c/windows/Fonts/ && \
+    chown wine.wine /home/wine/.wine -R
 
 CMD /bin/bash
