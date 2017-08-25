@@ -4,7 +4,8 @@ FROM fedora:26
 MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
 
 RUN dnf install -y --setopt=tsflags=nodocs \
-        wine winetricks sudo bash bash-completion \
+        wine winetricks zenity \
+        sudo bash bash-completion \
         glibc-langpack-ja glibc-locale-source \
         vlgothic-fonts vlgothic-p-fonts && \
         rm -rf /var/cache/yum && rm -rf /var/cache/dnf
