@@ -1,15 +1,21 @@
 # vi: set ft=dockerfile :
 
-FROM centos:7
+FROM alpine:3.6
 MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
 
-ENV GITBUCKET_VERSION="4.14.1" \
+ENV GITBUCKET_VERSION="4.15.0" \
     PORT="8080" \
+    DATA_DIR="/opt/.gitbucket" \
     TZ="JST-9"
-EXPOSE 8080
 
-RUN yum install -y java-1.8.0-openjdk-headless && yum clean all
+RUN apk update && apk add \
+        curl openjdk8-jre-base && \
+        rm -rf /var/cache/apk/* && \
+    mkdir -p /opt
+
+VOLUME ${DATA_DIR}
+EXPOSE ${PORT}
+
 WORKDIR /opt
-
 RUN curl -OL https://github.com/gitbucket/gitbucket/releases/download/${GITBUCKET_VERSION}/gitbucket.war
-CMD java -jar ./gitbucket.war --port=${PORT}
+CMD java -jar ./gitbucket.war --port=${PORT} --gitbucket.home=${DATA_DIR}
