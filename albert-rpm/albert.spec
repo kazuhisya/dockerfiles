@@ -65,7 +65,7 @@ rm -rf $RPM_BUILD_ROOT
 %{bindir}/albert
 #%%{datadir}/albert/plugins/*
 %{libdir}/albert/plugins/*
-%{datadir}/albert/themes/*
+%{datadir}/albert
 %{libdir}/albert/*.so
 %{datadir}/icons/hicolor/scalable/apps/albert.svg
 %{datadir}/applications/albert.desktop
