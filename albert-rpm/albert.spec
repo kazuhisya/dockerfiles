@@ -1,5 +1,5 @@
 %define name albert
-%define version 0.12.0
+%define version 0.13.1
 
 %define prefix     /usr
 %define bindir     /usr/bin
@@ -28,7 +28,8 @@ Requires:    qt5-qtbase libX11 muParser qt5-qtx11extras python-keybinder qt5-qts
 
 BuildRequires: cmake qt5-qtbase qt5-qttools 
 BuildRequires: qt5-qtbase-devel qt5-qtx11extras-devel muParser-devel
-BuildRequires: qt5-qtsvg-devel
+BuildRequires: qt5-qtsvg-devel qt5-qtdeclarative-devel
+BuildRequires: git
 
 %description
 
@@ -37,9 +38,12 @@ BuildRequires: qt5-qtsvg-devel
 %setup -q
 
 %build
+rm -rf plugins
+git clone --depth=1 https://github.com/albertlauncher/plugins
 cd src && cmake ".." \
  -DCMAKE_INSTALL_PREFIX=/usr \
- -DCMAKE_BUILD_TYPE=Release
+ -DCMAKE_BUILD_TYPE=Release \
+ -DBUILD_VIRTUALBOX=OFF
 make %{?_smp_mflags}
 
 %install
@@ -68,6 +72,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Oct  2 2017 Kazuhisa Hara <kazuhisya@gamial.com> - 0.13.1-1
+- build for ver 0.13.1
 * Sat Jun 10 2017 Kazuhisa Hara <kazuhisya@gamial.com> - 0.12.0-1
 - build for ver 0.12.0
 * Mon Jun  5 2017 Kazuhisa Hara <kazuhisya@gamial.com> - 0.11.3-1
