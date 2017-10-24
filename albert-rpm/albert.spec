@@ -1,5 +1,5 @@
 %define name albert
-%define version 0.13.1
+%define version 0.14.3
 
 %define prefix     /usr
 %define bindir     /usr/bin
@@ -40,15 +40,16 @@ BuildRequires: git
 %build
 rm -rf plugins
 git clone --depth=1 https://github.com/albertlauncher/plugins
-cd src && cmake ".." \
+cmake \
  -DCMAKE_INSTALL_PREFIX=/usr \
  -DCMAKE_BUILD_TYPE=Release \
- -DBUILD_VIRTUALBOX=OFF
+ -DBUILD_VIRTUALBOX=OFF \
+ -DBUILD_PYTHON=OFF
 make %{?_smp_mflags}
 
 %install
 # rm -rf $RPM_BUILD_ROOT
-cd src && make DESTDIR=$RPM_BUILD_ROOT install
+make DESTDIR=$RPM_BUILD_ROOT install
 
 
 %post 
@@ -72,6 +73,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Oct 24 2017 Kazuhisa Hara <kazuhisya@gamial.com> - 0.14.3-1
+- build for ver 0.14.3
 * Mon Oct  2 2017 Kazuhisa Hara <kazuhisya@gamial.com> - 0.13.1-1
 - build for ver 0.13.1
 * Sat Jun 10 2017 Kazuhisa Hara <kazuhisya@gamial.com> - 0.12.0-1
