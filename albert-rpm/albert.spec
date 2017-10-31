@@ -1,9 +1,9 @@
 %define name albert
-%define version 0.14.3
+%define version 0.14.5
 
 %define prefix     /usr
 %define bindir     /usr/bin
-%define libdir     /usr/lib
+%define libdir     /usr/lib64
 %define mandir     /usr/share/man
 %define datadir    /usr/share
 %define sysconfdir /etc
@@ -73,6 +73,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Oct 31 2017 Kazuhisa Hara <kazuhisya@gamial.com> - 0.14.5-1
+- build for ver 0.14.5
+- fix plugin libs file not found
 * Tue Oct 24 2017 Kazuhisa Hara <kazuhisya@gamial.com> - 0.14.3-1
 - build for ver 0.14.3
 * Mon Oct  2 2017 Kazuhisa Hara <kazuhisya@gamial.com> - 0.13.1-1
