@@ -1,5 +1,5 @@
 %define name albert
-%define version 0.14.5
+%define version 0.14.7
 
 %define prefix     /usr
 %define bindir     /usr/bin
@@ -73,6 +73,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Nov 10 2017 Kazuhisa Hara <kazuhisya@gamial.com> - 0.14.7-1
+- build for ver 0.14.7
 * Tue Oct 31 2017 Kazuhisa Hara <kazuhisya@gamial.com> - 0.14.5-1
 - build for ver 0.14.5
 - fix plugin libs file not found
