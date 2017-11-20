@@ -1,6 +1,6 @@
 # vi: set ft=dockerfile :
 
-FROM docker.io/ubuntu:16.04
+FROM docker.io/ubuntu:xenial
 MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
 
 ENV TZ="JST-9" \
