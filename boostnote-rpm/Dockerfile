@@ -1,23 +1,23 @@
 # vi: set ft=dockerfile :
 
-FROM docker.io/fedora:27
+FROM docker.io/ubuntu:16.04
 MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
 
 ENV TZ="JST-9" \
-    BOOSTNOTE_VERSION="0.8.16"
+    DEBIAN_FRONTEND="noninteractive"
 
-RUN dnf install -y --setopt=tsflags=nodocs \
-    rpm-build git
+RUN apt-get update && \
+    apt-get install -y  curl --no-install-recommends
+RUN curl -OLk https://deb.nodesource.com/setup_7.x && bash ./setup_7.x
+RUN apt-get install -y \
+      nodejs git rpm fakeroot --no-install-recommends
+RUN npm install -g grunt-cli
 
-ADD https://github.com/BoostIO/boost-releases/releases/download/v${BOOSTNOTE_VERSION}/boostnote_${BOOSTNOTE_VERSION}_amd64.deb /home/mock/boostnote.deb
-ADD boostnote.spec /home/mock/boostnote.spec
+RUN git clone --depth 1 https://github.com/BoostIO/Boostnote/ /boostnote &&\
+    useradd -m mock && chown -R mock.mock /boostnote
 
-RUN useradd -m mock && chown mock.mock -R /home/mock
 USER mock
-WORKDIR /home/mock
+WORKDIR /boostnote
 
-RUN ar vx boostnote.deb && \
-    mv data.tar.xz boostnote-${BOOSTNOTE_VERSION}.tar.gz && \
-    mkdir -p rpmbuild/SOURCES && \
-    mv boostnote-${BOOSTNOTE_VERSION}.tar.gz rpmbuild/SOURCES/
-RUN rpmbuild -ba boostnote.spec
+RUN npm install
+RUN grunt build
