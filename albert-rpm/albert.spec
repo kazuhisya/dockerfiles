@@ -1,5 +1,5 @@
 %define name albert
-%define version 0.14.11
+%define version 0.14.13
 
 %define prefix     /usr
 %define bindir     /usr/bin
@@ -24,11 +24,12 @@ Source0:     https://github.com/albertlauncher/%{name}/archive/v%{version}.tar.g
 
 Packager:    Rabin .Y
 Requires:    qt5-qtbase libX11 muParser qt5-qtx11extras python-keybinder qt5-qtsvg
-
+Requires:    qt5-qtgraphicaleffects qt5-qtquickcontrols
 
 BuildRequires: cmake qt5-qtbase qt5-qttools 
 BuildRequires: qt5-qtbase-devel qt5-qtx11extras-devel muParser-devel
 BuildRequires: qt5-qtsvg-devel qt5-qtdeclarative-devel
+BuildRequires: qt5-qtgraphicaleffects qt5-qtquickcontrols
 BuildRequires: git
 
 %description
@@ -73,6 +74,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Nov 27 2017 Kazuhisa Hara <kazuhisya@gamial.com> - 0.14.13-1
+- build for ver 0.14.13
 * Thu Nov 23 2017 Kazuhisa Hara <kazuhisya@gamial.com> - 0.14.11-1
 - build for ver 0.14.11
 * Thu Nov 16 2017 Kazuhisa Hara <kazuhisya@gamial.com> - 0.14.8-1
