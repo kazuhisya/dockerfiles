@@ -1,5 +1,5 @@
 %define name albert
-%define version 0.14.13
+%define version 0.14.14
 
 %define prefix     /usr
 %define bindir     /usr/bin
@@ -74,6 +74,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Dec 24 2017 Kazuhisa Hara <kazuhisya@gamial.com> - 0.14.14-1
+- build for ver 0.14.14
 * Mon Nov 27 2017 Kazuhisa Hara <kazuhisya@gamial.com> - 0.14.13-1
 - build for ver 0.14.13
 * Thu Nov 23 2017 Kazuhisa Hara <kazuhisya@gamial.com> - 0.14.11-1
