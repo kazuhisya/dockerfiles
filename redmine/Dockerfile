@@ -1,25 +1,26 @@
 # vi: set ft=dockerfile :
 
-FROM alpine:3.5
+FROM alpine:3.7
 MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
 
 # port
 EXPOSE 3000
 
 # env
-ENV REDMINE_VERSION="3.4.3" \
+ENV REDMINE_VERSION="3.4.4" \
     IPAFONT_VERSION="00303" \
     TZ="JST-9"
 
 # apk
 RUN apk update && apk add \
         automake bash build-base curl \
-        gcc git imagemagick imagemagick-dev \
+        gcc git imagemagick6 imagemagick6-dev \
         libxml2-dev libxslt-dev linux-headers \
         make readline-dev \
         ruby ruby-bigdecimal ruby-bundler ruby-dev ruby-json \
         sqlite-dev tzdata zlib-dev && \
-        rm -rf /var/cache/apk/*
+        rm -rf /var/cache/apk/* && \
+        ln -s /usr/bin/convert-6 /usr/bin/convert
 
 # Redmine Download
 RUN curl -OL http://www.redmine.org/releases/redmine-${REDMINE_VERSION}.tar.gz && \
@@ -49,8 +50,7 @@ RUN cp config/configuration.yml.example config/configuration.yml && \
 
 # Redmine Install
 RUN NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) && \
-    bundle install --without development test --path vendor/bundle -j${NPROC} && \
-    rm -rf ~/.bundle/cache/compact_index
+    bundle install --without development test --path vendor/bundle -j${NPROC}
 
 # Install Plug-in
 WORKDIR /var/lib/redmine/plugins
