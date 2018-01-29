@@ -1,9 +1,9 @@
 # vi: set ft=dockerfile :
 
-FROM alpine:3.6
+FROM alpine:3.7
 MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
 
-ENV GITBUCKET_VERSION="4.20.0" \
+ENV GITBUCKET_VERSION="4.21.2" \
     PORT="8080" \
     DATA_DIR="/opt/.gitbucket" \
     TZ="JST-9"
