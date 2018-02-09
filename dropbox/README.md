@@ -15,6 +15,6 @@ $ ./run.sh
 ## manage
 
 ```bash
-$ run-cli.sh status
-$ run-cli.sh stop
+$ ./cli.sh status
+$ ./cli.sh stop
 ```
