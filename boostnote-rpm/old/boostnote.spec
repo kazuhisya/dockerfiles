@@ -2,7 +2,7 @@
 %define bdir	%{_builddir}/%{name}-%{version}
 
 Name:		boostnote
-Version:	0.9.0
+Version:	0.10.0
 Release:	1%{?dist}
 Summary:	The opensource note app for developer.
 

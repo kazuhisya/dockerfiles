@@ -4,7 +4,7 @@ FROM docker.io/fedora:27
 MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
 
 ENV TZ="JST-9" \
-    BOOSTNOTE_VERSION="0.9.0"
+    BOOSTNOTE_VERSION="0.10.0"
 
 RUN dnf install -y --setopt=tsflags=nodocs \
     rpm-build git
