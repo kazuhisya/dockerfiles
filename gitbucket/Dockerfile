@@ -18,4 +18,9 @@ EXPOSE ${PORT}
 
 WORKDIR /opt
 RUN curl -OL https://github.com/gitbucket/gitbucket/releases/download/${GITBUCKET_VERSION}/gitbucket.war
-CMD java -jar ./gitbucket.war --port=${PORT} --gitbucket.home=${DATA_DIR}
+
+# Configure heap memory by cgroup memory limit
+# https://blogs.oracle.com/java-platform-group/java-se-support-for-docker-cpu-and-memory-limits
+ENV JAVA_OPTS -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap
+
+CMD java ${JAVA_OPTS} -jar ./gitbucket.war --port=${PORT} --gitbucket.home=${DATA_DIR}
