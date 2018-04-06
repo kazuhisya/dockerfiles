@@ -12,7 +12,7 @@ docker run -ti --rm \
   -e LC_CTYPE=ja_JP.UTF-8 \
   -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix:ro \
   --device /dev/snd \
-  -v /run/user/`id -u`/pulse/native:/run/user/`id -u`/pulse/native \
+  -v /run/user/`id -u`/pulse/native:/run/user/`id -u`/pulse/native:z \
   -v ~/.Xauthority:/home/wine/.Xauthority:z \
   -v `pwd`/share:/home/wine/shared_directory:z \
   local/wine:base
