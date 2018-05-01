@@ -3,7 +3,7 @@
 FROM alpine:3.7
 MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
 
-ENV GITBUCKET_VERSION="4.23.1" \
+ENV GITBUCKET_VERSION="4.24.1" \
     PORT="8080" \
     DATA_DIR="/opt/.gitbucket" \
     TZ="JST-9"
