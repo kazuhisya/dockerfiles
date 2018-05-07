@@ -1,7 +1,7 @@
 #!/bin/sh
 
-docker rmi $(docker images local/fc27 -q)
+docker rmi $(docker images local/fc28 -q)
 for name in dev-tools
 do
-    docker build -t local/fc27:${name} -f ./Dockerfile-${name} .
+    docker build -t local/fc28:${name} -f ./Dockerfile-${name} .
 done
