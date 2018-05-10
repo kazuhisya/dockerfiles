@@ -7,7 +7,7 @@ MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
 EXPOSE 3000
 
 # env
-ENV REDMINE_VERSION="3.4.4" \
+ENV REDMINE_VERSION="3.4.5" \
     IPAFONT_VERSION="00303" \
     TZ="JST-9"
 
