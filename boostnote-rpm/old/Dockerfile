@@ -1,10 +1,10 @@
 # vi: set ft=dockerfile :
 
-FROM docker.io/fedora:27
+FROM docker.io/fedora:28
 MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
 
 ENV TZ="JST-9" \
-    BOOSTNOTE_VERSION="0.11.4"
+    BOOSTNOTE_VERSION="0.11.5"
 
 RUN dnf install -y --setopt=tsflags=nodocs \
     rpm-build git
