@@ -9,6 +9,7 @@ ENV TZ="JST-9" \
 WORKDIR /root/rpmbuild
 RUN rpmdev-setuptree
 COPY cutemarked.spec /root/rpmbuild/SPECS/cutemarked.spec
+COPY cutemarked-0.11.3-fix-build-against-qt-5.11.0.patch /root/rpmbuild/SOURCES/cutemarked-0.11.3-fix-build-against-qt-5.11.0.patch
 RUN dnf builddep --nogpgcheck --setopt=tsflags=nodocs -y ./SPECS/cutemarked.spec
 RUN curl -OL https://github.com/cloose/CuteMarkEd/archive/v${CVERSION}.tar.gz && \
     tar xf v${CVERSION}.tar.gz && \

@@ -38,6 +38,7 @@ BuildRequires:          pkgconfig(sqlite3)
 BuildRequires:          qt5-qttools-devel
 BuildRequires:          qt5-linguist
 
+Patch0:	                cutemarked-0.11.3-fix-build-against-qt-5.11.0.patch
 
 %description
 A Qt-based Markdown editor with live HTML preview and syntax highlighting of markdown document.
@@ -52,6 +53,7 @@ This package provides the fontawesome iconengine plugin
  
 %prep
 %setup -q -n %{name}-%{version}
+%patch0 -p1
 
 %build
 %{_qt5_qmake} 
