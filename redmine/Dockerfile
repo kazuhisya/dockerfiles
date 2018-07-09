@@ -1,13 +1,13 @@
 # vi: set ft=dockerfile :
 
-FROM alpine:3.7
+FROM alpine:3.8
 MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
 
 # port
 EXPOSE 3000
 
 # env
-ENV REDMINE_VERSION="3.4.5" \
+ENV REDMINE_VERSION="3.4.6" \
     IPAFONT_VERSION="00303" \
     TZ="JST-9"
 
@@ -46,6 +46,7 @@ RUN cp config/configuration.yml.example config/configuration.yml && \
     echo "  pool: 5" >> config/database.yml && \
     echo "  timeout: 5000" >> config/database.yml && \
     echo "gem \"unicorn\"" >> Gemfile.local && \
+    echo "gem \"etc\"" >> Gemfile.local && \
     mkdir -p data
 
 # Redmine Install
