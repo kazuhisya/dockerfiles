@@ -1,14 +1,15 @@
 # vi: set ft=dockerfile :
 
-FROM centos:7
+FROM fedora:28
 MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
 
 # env
 ENV TZ="JST-9"
 
 # yum
-RUN yum install -y --setopt=tsflags=nodocs wget && \
-    yum clean all
+RUN dnf install -y --setopt=tsflags=nodocs \
+    python wget libstdc++ && \
+    dnf clean all
 
 WORKDIR /root
 
