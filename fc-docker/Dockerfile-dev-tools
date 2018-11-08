@@ -4,7 +4,7 @@ FROM fedora:29
 MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
 
 ENV TZ JST-9
-RUN dnf groupinstall -y "Development tools" --setopt=tsflags=nodocs
-RUN dnf install -y rpmdevtools rpmlint lsof vim bash-completion initscripts dnf-plugins-core @buildsys-build --setopt=tsflags=nodocs
+RUN dnf groupinstall -y "Development tools" --skip-broken --setopt=tsflags=nodocs
+RUN dnf install -y rpmdevtools rpmlint lsof vim bash-completion initscripts dnf-plugins-core @buildsys-build --skip-broken --setopt=tsflags=nodocs
 RUN echo '%debug_package %{nil}' >> /root/.rpmmacros && \
     echo '%define _unpackaged_files_terminate_build 0' >> /root/.rpmmacros
