@@ -8,7 +8,7 @@ ENV TZ="JST-9"
 
 # yum
 RUN dnf install -y --setopt=tsflags=nodocs \
-    python wget libstdc++ && \
+    python wget libstdc++ make gcc git procps-ng && \
     dnf clean all
 
 WORKDIR /root
@@ -21,6 +21,13 @@ RUN mkdir ~/bin && \
 RUN mkdir -p ~/.dropbox ~/Dropbox && \
     chmod +x ~/bin/dropbox-cli
 
+# Fake ext4
+RUN git clone --depth=1 https://github.com/dark/dropbox-filesystem-fix && \
+    cd dropbox-filesystem-fix && make -j
+
 VOLUME ["/root/Dropbox", "/root/.dropbox"]
 
-CMD ["/root/.dropbox-dist/dropboxd"]
+ADD CMD.sh /root/CMD.sh
+
+#CMD ["/root/.dropbox-dist/dropboxd"]
+CMD ["/root/CMD.sh"]
