@@ -5,10 +5,17 @@ MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
 
 RUN dnf install -y --setopt=tsflags=nodocs \
         wine winetricks zenity \
-        sudo bash bash-completion \
-        glibc-langpack-ja \
+        sudo bash bash-completion procps-ng \
+        glibc-langpack-ja findutils \
+        aria2 binutils cabextract p7zip-plugins \
+        polkit unzip wget xdg-utils xz \
         vlgothic-fonts vlgothic-p-fonts && \
-        rm -rf /var/cache/yum && rm -rf /var/cache/dnf
+    rm -rf /var/cache/yum && rm -rf /var/cache/dnf
+
+RUN dnf install -y --setopt=tsflags=nodocs \
+        https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
+        https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm && \
+    dnf install -y --setopt=tsflags=nodocs unrar
 
 RUN cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
     export uid=1000 gid=1000 && \
