@@ -1,17 +1,16 @@
 # vi: set ft=dockerfile :
 
-FROM fedora:28
+FROM fedora:30
 MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
 
 RUN dnf install -y --setopt=tsflags=nodocs \
         wine winetricks zenity \
         sudo bash bash-completion \
-        glibc-langpack-ja glibc-locale-source \
+        glibc-langpack-ja \
         vlgothic-fonts vlgothic-p-fonts && \
         rm -rf /var/cache/yum && rm -rf /var/cache/dnf
 
 RUN cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
-    localedef -i ja_JP -f UTF-8 ja_JP.UTF-8 | true && \
     export uid=1000 gid=1000 && \
     mkdir -p /home/wine && \
     echo "wine:x:${uid}:${gid}:Developer,,,:/home/wine:/bin/bash" >> /etc/passwd && \
