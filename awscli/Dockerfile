@@ -8,7 +8,7 @@ ENV TZ="JST-9"
 
 # apk
 RUN apk update && \
-    apk add python3 bash curl groff && \
+    apk add python3 bash curl groff vim jq && \
     rm -rf /var/cache/apk/*
 
 # pip
