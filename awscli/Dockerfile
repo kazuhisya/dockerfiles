@@ -1,6 +1,6 @@
 # vi: set ft=dockerfile :
 
-FROM alpine:3.10
+FROM alpine:3.11
 MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
 
 # env
