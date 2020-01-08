@@ -18,7 +18,7 @@ else
     bundle exec rake generate_secret_token
     RAILS_ENV=production bundle exec rake db:migrate
     RAILS_ENV=production bundle exec rake redmine:plugins:migrate
-    bundle exec rake tmp:cache:clear tmp:sessions:clear
+    bundle exec rake tmp:cache:clear
     echo "=== upgrade done ==="
 fi
 

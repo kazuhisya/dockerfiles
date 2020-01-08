@@ -1,13 +1,13 @@
 # vi: set ft=dockerfile :
 
-FROM alpine:3.10
+FROM alpine:3.11
 MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
 
 # port
 EXPOSE 3000
 
 # env
-ENV REDMINE_VERSION="4.0.5" \
+ENV REDMINE_VERSION="4.1.0" \
     IPAFONT_VERSION="00303" \
     TZ="JST-9"
 
@@ -29,7 +29,7 @@ RUN curl -OL http://www.redmine.org/releases/redmine-${REDMINE_VERSION}.tar.gz &
     rm -rf redmine-${REDMINE_VERSION}.tar.gz
 
 # IPA font Download
-RUN curl -OL https://oscdl.ipa.go.jp/IPAfont/ipag${IPAFONT_VERSION}.zip && \
+RUN curl -OL https://ipafont.ipa.go.jp/IPAfont/ipag${IPAFONT_VERSION}.zip && \
     unzip ipag${IPAFONT_VERSION}.zip && \
     mkdir -p /usr/share/fonts/ipa-gothic && \
     mv ipag${IPAFONT_VERSION}/ipag.ttf /usr/share/fonts/ipa-gothic/ && \
