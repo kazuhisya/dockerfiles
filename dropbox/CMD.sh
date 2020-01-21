@@ -1,3 +1,3 @@
 #!/bin/bash
-python /root/dropbox-filesystem-fix/dropbox_start.py
+python3 /root/dropbox-filesystem-fix/dropbox_start.py
 bash

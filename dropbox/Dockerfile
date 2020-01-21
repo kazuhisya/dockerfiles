@@ -1,6 +1,6 @@
 # vi: set ft=dockerfile :
 
-FROM fedora:30
+FROM centos:8
 MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
 
 # env
@@ -8,7 +8,7 @@ ENV TZ="JST-9"
 
 # yum
 RUN dnf install -y --setopt=tsflags=nodocs \
-    python wget libstdc++ make gcc git procps-ng && \
+    python3 wget libstdc++ make gcc git procps-ng && \
     dnf clean all
 
 WORKDIR /root
