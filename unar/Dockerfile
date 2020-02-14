@@ -1,18 +1,18 @@
 # vi: set ft=dockerfile :
 
-FROM centos:7
+FROM registry.fedoraproject.org/fedora-minimal:31
 MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
 
 # env
 ENV TZ="JST-9" \
     LANG="en_US.UTF-8"
 
-# yum
-RUN yum install -y --setopt=tsflags=nodocs \
-      bash-completion epel-release && \
-    yum install -y --setopt=tsflags=nodocs \
-      unar && \
-    yum clean all
+# microdnf
+# This mkdir is workaround for microdnf
+# https://github.com/rpm-software-management/microdnf/issues/50#issuecomment-559137747
+RUN mkdir -p /run/user/$UID && \
+    microdnf install --nodocs unar && \
+    microdnf clean all
 
 WORKDIR /root/share
 
