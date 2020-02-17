@@ -22,6 +22,9 @@ RUN cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
     cp /usr/share/fonts/vlgothic/*.ttf /home/wine/.wine/drive_c/windows/Fonts/ && \
     chown wine:wine /home/wine -R
 
+# for quick check
+#RUN dnf install -y --disablerepo=* --enablerepo=fedora xorg-x11-apps
+
 USER wine
 ENV HOME="/home/wine" \
     LANG="ja_JP.UTF-8"
