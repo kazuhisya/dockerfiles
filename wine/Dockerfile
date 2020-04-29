@@ -1,6 +1,6 @@
 # vi: set ft=dockerfile :
 
-FROM fedora:31
+FROM fedora:32
 MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
 
 RUN dnf install -y --setopt=tsflags=nodocs \
