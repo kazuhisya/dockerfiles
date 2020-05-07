@@ -1,6 +1,6 @@
 # vi: set ft=dockerfile :
 
-FROM registry.fedoraproject.org/fedora-minimal:31
+FROM registry.fedoraproject.org/fedora-minimal:32
 MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
 
 # env
@@ -19,4 +19,4 @@ WORKDIR /root/share
 
 VOLUME ["/root/share"]
 
-CMD [bash]
+CMD ["bash"]
