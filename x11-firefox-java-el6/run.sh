@@ -7,7 +7,7 @@ if [[ -e /usr/bin/podman ]]; then
 fi
 
 # selinux label
-sudo chcon -Rt svirt_sandbox_file_t ./share
+sudo chcon -Rt container_file_t ./share
 
 # docker run
 docker run -ti --rm \
