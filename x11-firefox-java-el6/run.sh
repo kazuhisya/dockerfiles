@@ -22,6 +22,6 @@ docker run -ti --rm \
   --security-opt label=type:container_runtime_t \
   --device /dev/snd \
   -v /run/user/`id -u`/pulse/native:/run/user/`id -u`/pulse/native:z \
-  -v ~/.Xauthority:/home/java/.Xauthority:z,rw \
+  -v /run/user/`id -u`/gdm/Xauthority:/home/java/.Xauthority:z,rw \
   -v `pwd`/share:/home/java/shared_directory:z \
   local/x11:java-el6
