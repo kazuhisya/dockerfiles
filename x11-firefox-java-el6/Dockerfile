@@ -3,6 +3,9 @@
 FROM centos:6
 MAINTAINER Kazuhisa Hara <kazuhisya@gmail.com>
 
+# Comment out if you don't need additional rpms
+ADD rpm /root/rpm
+
 ADD vault-i386.repo /etc/yum.repos.d/vault-i386.repo
 RUN yum install -y --setopt=tsflags=nodocs \
         firefox-52.8.0-1.el6.centos.i686 \
@@ -15,7 +18,8 @@ RUN yum install -y --setopt=tsflags=nodocs \
         vlgothic-fonts vlgothic-p-fonts \
         --exclude java-1.8.0-openjdk-headless.x86_64 \
         --exclude java-1.8.0-openjdk.x86_64 \
-        && \
+        /root/rpm/*.rpm \
+    && \
     yum install -y --setopt=tsflags=nodocs \
         ipa-gothic-fonts.noarch \
         bash-completion && \
