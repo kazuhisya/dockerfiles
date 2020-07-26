@@ -1,0 +1,11 @@
+[C6-base-i386]
+name=CentOS-6 i386 - Base
+baseurl=http://ftp.riken.jp/Linux/centos/6/os/i386/
+gpgcheck=0
+enabled=0
+
+[C6-updates-i386]
+name=CentOS-6 i386 - Updates
+baseurl=http://ftp.riken.jp/Linux/centos/6/updates/i386/
+gpgcheck=0
+enabled=0
